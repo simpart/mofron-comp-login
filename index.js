@@ -47,6 +47,8 @@ mf.comp.Login = class extends Appbase {
             this.frame().addChild(
                 this.form()
             );
+            
+            this.size(25);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -116,8 +118,8 @@ mf.comp.Login = class extends Appbase {
                 throw new Error('invalid parameter');
             }
             frm.execOption({
-                color     : new mf.Color(255,255,255),
-                size      : new mf.Param(420,210),
+                color     : new mf.Color(255, 255, 255),
+                //size      : new mf.Param(420, ),
                 addEffect : new Center()
             });
             this.m_frame = frm;
@@ -155,11 +157,12 @@ mf.comp.Login = class extends Appbase {
                 new Click(
                     (tgt,p) => {
                         try {
+                            //let msg = 
                             if (true === p.visible()) {
                                 let size = login.frame().size();
-                                if (300 > login.frame().size().height) {
-                                    login.frame().size(size.width, size.height + 60);
-                                }
+                                login.frame().size(
+                                    size[0], size[1] + (login.form().size()*3) + 10
+                                );
                                 login.resizeEvent(login, false);
                             }
                         } catch (e) {
@@ -180,6 +183,22 @@ mf.comp.Login = class extends Appbase {
         try {
             let ret = this.form().uri(uri);
             this.form().callback(func, this);
+            return ret;
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
+    size (val) {
+        try {
+            let ret = this.form().size(val);
+            if (undefined !== val) {
+                this.frame().size(
+                    420,
+                    this.form().height() + 10
+                );
+            }
             return ret;
         } catch (e) {
             console.error(e.stack);
