@@ -118,8 +118,6 @@ mf.comp.Login = class extends Appbase {
                 throw new Error('invalid parameter');
             }
             frm.execOption({
-                color     : new mf.Color(255, 255, 255),
-                //size      : new mf.Param(420, ),
                 addEffect : new Center()
             });
             this.m_frame = frm;
@@ -161,7 +159,7 @@ mf.comp.Login = class extends Appbase {
                             if (true === p.visible()) {
                                 let size = login.frame().size();
                                 login.frame().size(
-                                    size[0], size[1] + (login.form().size()*3) + 10
+                                    size[0], login.form().height()
                                 );
                                 login.resizeEvent(login, false);
                             }
@@ -194,10 +192,8 @@ mf.comp.Login = class extends Appbase {
         try {
             let ret = this.form().size(val);
             if (undefined !== val) {
-                this.frame().size(
-                    420,
-                    this.form().height() + 10
-                );
+                let hei = this.form().height();
+                this.frame().size(420, hei);
             }
             return ret;
         } catch (e) {
