@@ -59,7 +59,7 @@ mf.comp.Login = class extends Appbase {
         try {
             /* set wrap color */
             let thm_clr = this.theme().color();
-            if (null !== color) {
+            if (null !== thm_clr) {
                 this.color(thm_clr);
             }
             
