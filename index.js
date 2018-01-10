@@ -48,7 +48,7 @@ mf.comp.Login = class extends Appbase {
                 this.form()
             );
             
-            this.size(25);
+            this.size(30);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -58,19 +58,9 @@ mf.comp.Login = class extends Appbase {
     themeConts () {
         try {
             /* set wrap color */
-            let color = this.theme().color();
+            let thm_clr = this.theme().color();
             if (null !== color) {
-                let red = color[0].rgba()[0];
-                let grn = color[0].rgba()[1];
-                let ble = color[0].rgba()[2];
-                let set_clr = new mf.Color(
-                    (254 < red+20) ? 255 : red+20,
-                    (254 < grn+20) ? 255 : grn+20,
-                    (254 < ble+20) ? 255 : ble+20
-                );
-                this.contents().style({
-                    background : set_clr.getStyle()
-                });
+                this.color(thm_clr);
             }
             
             /* set frame */
@@ -109,7 +99,11 @@ mf.comp.Login = class extends Appbase {
             if (undefined === frm) {
                 /* getter */
                 if (undefined === this.m_frame) {
-                    this.frame(new Frame());
+                    this.frame(
+                        new Frame({
+                            color : new mf.Color(255,255,255)
+                        })
+                    );
                 }
                 return this.m_frame;
             }
@@ -142,6 +136,21 @@ mf.comp.Login = class extends Appbase {
             }
             this.addFormResizeEvent(fom);
             this.m_form = fom;
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
+    submit (btn) {
+        try {
+            if (undefined === btn) {
+                /* getter */
+                return this.form().submitComp();
+            }
+            /* setter */
+            this.form().submitComp(btn);
+            this.addFormResizeEvent(this.form());
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -196,6 +205,20 @@ mf.comp.Login = class extends Appbase {
                 this.frame().size(420, hei);
             }
             return ret;
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
+    color (clr) {
+        try {
+            let ret = super.color(clr);
+            if (undefined !== ret) {
+                return ret;
+            }
+            /* set submit color */
+            this.submit().color(clr);
         } catch (e) {
             console.error(e.stack);
             throw e;
