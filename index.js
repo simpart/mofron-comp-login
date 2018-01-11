@@ -48,7 +48,7 @@ mf.comp.Login = class extends Appbase {
                 this.form()
             );
             
-            this.size(30);
+            this.size(50);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -199,10 +199,11 @@ mf.comp.Login = class extends Appbase {
     
     size (val) {
         try {
-            let ret = this.form().size(val);
+            let ret = this.form().size(val);     // login form size
             if (undefined !== val) {
+                this.header().height(val+15);    // header size
                 let hei = this.form().height();
-                this.frame().size(420, hei);
+                this.frame().size(420, hei);     // frame size
             }
             return ret;
         } catch (e) {
