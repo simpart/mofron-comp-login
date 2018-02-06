@@ -39,7 +39,7 @@ mf.comp.Login = class extends Appbase {
             super.initDomConts();
             
             /* add frame */
-            this.contents().addChild(
+            this.contents(
                 this.frame()
             );
             
@@ -49,6 +49,11 @@ mf.comp.Login = class extends Appbase {
             );
             
             this.size(50);
+            
+            mf.func.addResizeWin(
+                this.resizeEvent,
+                this
+            );
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -83,7 +88,6 @@ mf.comp.Login = class extends Appbase {
     
     resizeEvent (base) {
         try {
-            super.resizeEvent(base);
             let center = base.frame().getConfig('effect', 'Center');
             if (null !== center) {
                 center.execute(true);
