@@ -23,6 +23,7 @@ mf.comp.Login = class extends Appbase {
             super();
             this.name('Login');
             this.prmOpt(po);
+            this.adom();
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -36,7 +37,7 @@ mf.comp.Login = class extends Appbase {
      */
     initDomConts (prm) {
         try {
-            super.initDomConts();
+            super.initDomConts(prm);
             
             /* add frame */
             this.contents(
@@ -105,7 +106,7 @@ mf.comp.Login = class extends Appbase {
                 if (undefined === this.m_frame) {
                     this.frame(
                         new Frame({
-                            color : new mf.Color(255,255,255)
+                            color : new mf.Color(240,240,240)
                         })
                     );
                 }
@@ -153,6 +154,7 @@ mf.comp.Login = class extends Appbase {
                 return this.form().submitComp();
             }
             /* setter */
+            btn.text('Login');
             this.form().submitComp(btn);
             this.addFormResizeEvent(this.form());
         } catch (e) {
