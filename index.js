@@ -23,7 +23,6 @@ mf.comp.Login = class extends Appbase {
             super();
             this.name('Login');
             this.prmOpt(po);
-            this.adom();
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -40,59 +39,11 @@ mf.comp.Login = class extends Appbase {
             super.initDomConts(prm);
             
             /* add frame */
-            this.contents(
-                this.frame()
-            );
+            this.contents(this.frame());
             
             /* set form */
-            this.frame().addChild(
-                this.form()
-            );
+            this.frame().addChild(this.form());
             
-            this.size(50);
-            
-            mf.func.addResizeWin(
-                this.resizeEvent,
-                this
-            );
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
-    themeConts () {
-        try {
-            /* set wrap color */
-            let thm_clr = this.theme().color();
-            if (null !== thm_clr) {
-                this.color(thm_clr);
-            }
-            
-            /* set frame */
-            let frm = this.theme().component('mofron-comp-frame');
-            if (null !== frm) {
-                this.frame(frm);
-            }
-            
-            /* set form */
-            let fom = this.theme().component('mofron-comp-form');
-            if (null !== fom) {
-                this.form(fom);
-            }
-            
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
-    resizeEvent (base) {
-        try {
-            let center = base.frame().getConfig('effect', 'Center');
-            if (null !== center) {
-                center.execute(true);
-            }
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -106,7 +57,8 @@ mf.comp.Login = class extends Appbase {
                 if (undefined === this.m_frame) {
                     this.frame(
                         new Frame({
-                            color : new mf.Color(240,240,240)
+                            size  : new mf.Param(450, 240),
+                            color : new mf.Color(250,250,250)
                         })
                     );
                 }
@@ -131,7 +83,7 @@ mf.comp.Login = class extends Appbase {
             if (undefined === fom) {
                 /* getter */
                 if (undefined === this.m_form) {
-                    this.form(new LoginForm());
+                    this.form(new LoginForm({}));
                 }
                 return this.m_form;
             }
@@ -168,22 +120,18 @@ mf.comp.Login = class extends Appbase {
             let login = this;
             fom.submitComp().addEvent(
                 new Click(
-                    (tgt,p) => {
+                    (tgt,prm) => {
                         try {
-                            //let msg = 
-                            if (true === p.visible()) {
-                                let size = login.frame().size();
-                                login.frame().size(
-                                    size[0], login.form().height()
-                                );
-                                login.resizeEvent(login, false);
-                            }
+                            login.frame().size(
+                                login.frame().size()[0],
+                                login.form().height() + 35
+                            );
                         } catch (e) {
                             console.error(e.stack);
                             throw e;
                         }
                     },
-                    fom.message()
+                    fom
                 )
             );
         } catch (e) {
@@ -203,20 +151,20 @@ mf.comp.Login = class extends Appbase {
         }
     }
     
-    size (val) {
-        try {
-            let ret = this.form().size(val);     // login form size
-            if (undefined !== val) {
-                this.header().height(val+15);    // header size
-                let hei = this.form().height();
-                this.frame().size(420, hei);     // frame size
-            }
-            return ret;
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
+    //size (val) {
+    //    try {
+    //        //let ret = this.form().size(val);     // login form size
+    //        if (undefined !== val) {
+    //            this.header().height(val+15);    // header size
+    //            let hei = this.form().height();
+    //            this.frame().size(420, hei);     // frame size
+    //        }
+    //        return ret;
+    //    } catch (e) {
+    //        console.error(e.stack);
+    //        throw e;
+    //    }
+    //}
     
     color (clr) {
         try {
@@ -233,3 +181,4 @@ mf.comp.Login = class extends Appbase {
     }
 }
 module.exports = mofron.comp.Login;
+/* end of file */
