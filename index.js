@@ -44,6 +44,19 @@ mf.comp.Login = class extends Appbase {
             /* set form */
             this.frame().addChild(this.form());
             
+            this.form().msgEvent(
+                (msg, lgn) => {
+                    try {
+                        lgn.frame().height(
+                            lgn.form().height() + 35
+                        );
+                    } catch (e) {
+                        console.error(e.stack);
+                        throw e;
+                    }
+                },
+                this
+            );
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -91,7 +104,6 @@ mf.comp.Login = class extends Appbase {
             if (false === mf.func.isInclude(fom, 'Form')) {
                 throw new Error('invalid parameter');
             }
-            this.addFormResizeEvent(fom);
             this.m_form = fom;
         } catch (e) {
             console.error(e.stack);
@@ -108,32 +120,6 @@ mf.comp.Login = class extends Appbase {
             /* setter */
             btn.text('Login');
             this.form().submitComp(btn);
-            this.addFormResizeEvent(this.form());
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
-    addFormResizeEvent (fom) {
-        try {
-            let login = this;
-            fom.submitComp().addEvent(
-                new Click(
-                    (tgt,prm) => {
-                        try {
-                            login.frame().size(
-                                login.frame().size()[0],
-                                login.form().height() + 35
-                            );
-                        } catch (e) {
-                            console.error(e.stack);
-                            throw e;
-                        }
-                    },
-                    fom
-                )
-            );
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -150,21 +136,6 @@ mf.comp.Login = class extends Appbase {
             throw e;
         }
     }
-    
-    //size (val) {
-    //    try {
-    //        //let ret = this.form().size(val);     // login form size
-    //        if (undefined !== val) {
-    //            this.header().height(val+15);    // header size
-    //            let hei = this.form().height();
-    //            this.frame().size(420, hei);     // frame size
-    //        }
-    //        return ret;
-    //    } catch (e) {
-    //        console.error(e.stack);
-    //        throw e;
-    //    }
-    //}
     
     color (clr) {
         try {
