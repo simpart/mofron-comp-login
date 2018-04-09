@@ -37,11 +37,10 @@ mf.comp.Login = class extends Appbase {
     initDomConts (prm) {
         try {
             super.initDomConts(prm);
-            let set_hei = window.innerHeight - this.header().height();
             mf.func.addResizeWin(
                 (p) => {
                     try {
-                        p.height(set_hei);
+                        p.height(window.innerHeight - this.header().height());
                     } catch (e) {
                         console.error(e.stack);
                         throw e;
@@ -49,7 +48,7 @@ mf.comp.Login = class extends Appbase {
                 },
                 this
             );
-            this.height(set_hei);
+            this.height(window.innerHeight - this.header().height());
             
             /* add frame */
             this.contents(this.frame());
