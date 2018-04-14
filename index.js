@@ -60,7 +60,7 @@ mf.comp.Login = class extends Appbase {
                 (msg, lgn) => {
                     try {
                         lgn.frame().height(
-                            lgn.form().height() + 35
+                            lgn.form().height() + 30
                         );
                     } catch (e) {
                         console.error(e.stack);
