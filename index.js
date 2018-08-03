@@ -2,15 +2,17 @@
  * @file   mofron-comp-login/index.js
  * @author simpart
  */
-let mf = require('mofron');
+const mf = require('mofron');
 /* component */
-let Appbase   = require('mofron-comp-appbase');
-let Frame     = require('mofron-comp-frame');
-let LoginForm = require('mofron-comp-loginform');
+const Appbase   = require('mofron-comp-appbase');
+const Frame     = require('mofron-comp-frame');
+const LoginForm = require('mofron-comp-loginform');
 /* event */
-let Click = require('mofron-event-click');
+const Click = require('mofron-event-click');
 /* effect */
-let Center = require('mofron-effect-center');
+const SynWin = require('mofron-effect-syncwin');
+const HrzPos = require('mofron-effect-hrzpos');
+const VrtPos = require('mofron-effect-vrtpos');
 
 /**
  * @class mofron.comp.Login
@@ -22,6 +24,7 @@ mf.comp.Login = class extends Appbase {
         try {
             super();
             this.name('Login');
+            this.prmMap('title');
             this.prmOpt(po);
         } catch (e) {
             console.error(e.stack);
@@ -34,24 +37,13 @@ mf.comp.Login = class extends Appbase {
      * 
      * @param prm : (string) text contents
      */
-    initDomConts (prm) {
+    initDomConts () {
         try {
-            super.initDomConts(prm);
-            mf.func.addResizeWin(
-                (p) => {
-                    try {
-                        p.height(window.innerHeight - this.header().height());
-                    } catch (e) {
-                        console.error(e.stack);
-                        throw e;
-                    }
-                },
-                this
-            );
-            this.height(window.innerHeight - this.header().height());
+            super.initDomConts();
+            this.addEffect(new SynWin(false, true));
             
             /* add frame */
-            this.contents(this.frame());
+            this.addChild(this.frame());
             
             /* set form */
             this.frame().addChild(this.form());
@@ -82,8 +74,8 @@ mf.comp.Login = class extends Appbase {
                 if (undefined === this.m_frame) {
                     this.frame(
                         new Frame({
-                            size  : new mf.Param(450, 240),
-                            color : new mf.Color(250,250,250)
+                            size      : new mf.Param(450, 240),
+                            baseColor : new mf.Color('white')
                         })
                     );
                 }
@@ -94,7 +86,10 @@ mf.comp.Login = class extends Appbase {
                 throw new Error('invalid parameter');
             }
             frm.execOption({
-                addEffect : new Center()
+                effect : [
+                    new HrzPos('center'),
+                    new VrtPos('center')
+                ]
             });
             this.m_frame = frm;
         } catch (e) {
@@ -149,14 +144,12 @@ mf.comp.Login = class extends Appbase {
         }
     }
     
-    color (clr) {
+    mainColor (prm) {
         try {
-            let ret = super.color(clr);
-            if (undefined !== ret) {
-                return ret;
+            let ret = super.mainColor(prm);
+            if (undefined === ret) {
+                this.form().submitComp().mainColor(prm);
             }
-            /* set submit color */
-            this.submit().color(clr);
         } catch (e) {
             console.error(e.stack);
             throw e;
