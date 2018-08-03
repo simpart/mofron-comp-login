@@ -75,7 +75,7 @@ mf.comp.Login = class extends Appbase {
                     this.frame(
                         new Frame({
                             size      : new mf.Param(450, 240),
-                            baseColor : new mf.Color('white')
+                            mainColor : new mf.Color('white')
                         })
                     );
                 }
