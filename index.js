@@ -52,7 +52,7 @@ mf.comp.Login = class extends Appbase {
                 (msg, lgn) => {
                     try {
                         lgn.frame().height(
-                            lgn.form().height() + 30
+                            mf.func.sizeSum(lgn.form().height() + 0.3)
                         );
                     } catch (e) {
                         console.error(e.stack);
@@ -74,7 +74,7 @@ mf.comp.Login = class extends Appbase {
                 if (undefined === this.m_frame) {
                     this.frame(
                         new Frame({
-                            size      : new mf.Param(450, 240),
+                            size      : new mf.Param(4.5, 2.4),
                             mainColor : new mf.Color('white')
                         })
                     );
