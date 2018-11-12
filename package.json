@@ -1,6 +1,6 @@
 {
   "name": "mofron-comp-login",
-  "version": "0.2.2",
+  "version": "0.2.4",
   "description": "login component for mofron",
   "main": "index.js",
   "scripts": {
@@ -11,6 +11,7 @@
     "mofron-comp-loginform" : "",
     "mofron-event-click"    : "",
     "mofron-effect-syncwin" : "",
+    "mofron-effect-synchei" : "",
     "mofron-effect-hrzpos"  : "",
     "mofron-effect-vrtpos"  : ""
   },

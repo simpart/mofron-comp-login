@@ -1,30 +1,31 @@
 /**
  * @file   mofron-comp-login/index.js
+ * @brief  login component for mofron
  * @author simpart
  */
-const mf = require('mofron');
-/* component */
-const Appbase   = require('mofron-comp-appbase');
-const Frame     = require('mofron-comp-frame');
-const LoginForm = require('mofron-comp-loginform');
-/* event */
-const Click = require('mofron-event-click');
-/* effect */
-const SynWin = require('mofron-effect-syncwin');
-const HrzPos = require('mofron-effect-hrzpos');
-const VrtPos = require('mofron-effect-vrtpos');
+const mf      = require('mofron');
+const Appbase = require('mofron-comp-appbase');
+const Frame   = require('mofron-comp-frame');
+const Form    = require('mofron-comp-loginform');
+const Click   = require('mofron-event-click');
+const SynWin  = require('mofron-effect-syncwin');
+const SynWid  = require('mofron-effect-syncwid');
+const SynHei  = require('mofron-effect-synchei');
+const HrzPos  = require('mofron-effect-hrzpos');
+const VrtPos  = require('mofron-effect-vrtpos');
 
-/**
- * @class mofron.comp.Login
- * @brief login component for mofron
- */
 mf.comp.Login = class extends Appbase {
-    
+    /**
+     * initialize component
+     * 
+     * @param p1 (object) component option
+     * @param p1 (string) app title
+     */
     constructor (po) {
         try {
             super();
             this.name('Login');
-            this.prmMap('title');
+            this.prmMap(['title', 'authConf']);
             this.prmOpt(po);
         } catch (e) {
             console.error(e.stack);
@@ -33,106 +34,81 @@ mf.comp.Login = class extends Appbase {
     }
     
     /**
-     * initialize vdom
+     * initialize dom contents
      * 
-     * @param prm : (string) text contents
+     * @note private method
      */
     initDomConts () {
         try {
             super.initDomConts();
-            this.addEffect(new SynWin(false, true));
-            
-            /* add frame */
-            this.addChild(this.frame());
-            
-            /* set form */
-            this.frame().addChild(this.form());
-            
-            this.form().msgEvent(
-                (msg, lgn) => {
-                    try {
-                        lgn.frame().height(
-                            mf.func.sizeSum(lgn.form().height() + 0.3)
-                        );
-                    } catch (e) {
-                        console.error(e.stack);
-                        throw e;
-                    }
-                },
-                this
+            this.effect(
+                new SynWin({
+                    yflag : true,
+                    yofs  : '-' + this.header().height()
+                })
             );
+            
+            /* add login form */
+            this.frame().execOption({ child : this.form() });
+            this.child(this.frame());
         } catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
     
-    frame (frm) {
+    /**
+     * frame component setter/getter
+     * 
+     * @note private method
+     */
+    frame (prm) {
         try {
-            if (undefined === frm) {
-                /* getter */
-                if (undefined === this.m_frame) {
-                    this.frame(
-                        new Frame({
-                            size      : new mf.Param(4.5, 2.4),
-                            mainColor : new mf.Color('white')
-                        })
-                    );
-                }
-                return this.m_frame;
+            let ret = this.innerComp('frame', prm, Frame);
+            if (undefined !== prm) {
+                prm.execOption({
+                    color  : 'white',
+                    width  : '3.5rem',
+                    effect : [
+                        new HrzPos('center'),
+                        new VrtPos('center'),
+                        new SynHei(
+                            this.form(),
+                            mf.func.sizeSum(
+                                this.form().submitConts().height(),
+                                this.form().submitConts().sizeValue('margin-top'),
+                                '0.4rem'
+                            )
+                        )
+                    ]
+                });
             }
-            /* setter */
-            if (false === mofron.func.isInclude(frm, 'Frame')) {
-                throw new Error('invalid parameter');
-            }
-            frm.execOption({
-                effect : [
-                    new HrzPos('center'),
-                    new VrtPos('center')
-                ]
-            });
-            this.m_frame = frm;
+            return ret;
         } catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
     
-    form (fom) {
-        try {
-            if (undefined === fom) {
-                /* getter */
-                if (undefined === this.m_form) {
-                    this.form(new LoginForm({}));
-                }
-                return this.m_form;
-            }
-            /* setter */
-            if (false === mf.func.isInclude(fom, 'Form')) {
-                throw new Error('invalid parameter');
-            }
-            this.m_form = fom;
-        } catch (e) {
+    /**
+     * login form setter/getter
+     * 
+     * @note private method
+     */
+    form (prm) {
+        try { return this.innerComp('form', prm, Form); } catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
     
-    submit (btn) {
-        try {
-            if (undefined === btn) {
-                /* getter */
-                return this.form().submitComp();
-            }
-            /* setter */
-            btn.text('Login');
-            this.form().submitComp(btn);
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
+    /**
+     * authentication config setter/getter
+     * 
+     * @param p1 (string) uri path
+     * @param p2 (function) send callback function
+     * @return (string) uri
+     */
     authConf (uri, func) {
         try {
             let ret = this.form().uri(uri);
@@ -144,12 +120,20 @@ mf.comp.Login = class extends Appbase {
         }
     }
     
+    /**
+     * main color setter/getter
+     * 
+     * @param p1 (string) color name
+     * @param p1 (array) color value ([red,green,blue])
+     * @return (string) color value
+     */
     mainColor (prm) {
         try {
             let ret = super.mainColor(prm);
             if (undefined === ret) {
-                this.form().submitComp().mainColor(prm);
+                this.form().submitConts().mainColor(prm);
             }
+            return ret;
         } catch (e) {
             console.error(e.stack);
             throw e;
