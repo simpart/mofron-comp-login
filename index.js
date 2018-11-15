@@ -131,10 +131,24 @@ mf.comp.Login = class extends Appbase {
         try {
             let ret = super.mainColor(prm);
             if (undefined === ret) {
-                this.form().submitConts().mainColor(prm);
+                this.frame().mainColor(prm);
             }
             return ret;
         } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
+    /**
+     * submit color setter/getter
+     *
+     * @param p1 (string) color name
+     * @param p1 (array) color value ([red,green,blue])
+     * @return (string) color value
+     */
+    accentColor (prm) {
+        try { return this.form().submitConts().mainColor(prm); } catch (e) {
             console.error(e.stack);
             throw e;
         }

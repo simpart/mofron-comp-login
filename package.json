@@ -1,6 +1,6 @@
 {
   "name": "mofron-comp-login",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "login component for mofron",
   "main": "index.js",
   "scripts": {
