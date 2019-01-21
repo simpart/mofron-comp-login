@@ -41,12 +41,7 @@ mf.comp.Login = class extends Appbase {
     initDomConts () {
         try {
             super.initDomConts();
-            this.effect(
-                new SynWin({
-                    yflag : true,
-                    yofs  : '-' + this.header().height()
-                })
-            );
+            this.effect(new SynWin({yflag: true }));
             
             /* add login form */
             this.frame().execOption({ child : this.form() });
@@ -66,21 +61,14 @@ mf.comp.Login = class extends Appbase {
         try {
             let ret = this.innerComp('frame', prm, Frame);
             if (undefined !== prm) {
+                let off = mf.func.sizeSum(
+                    this.form().submitConts().height(),
+                    this.form().submitConts().sizeValue('margin-top'),
+                    '0.4rem'
+                );
                 prm.execOption({
-                    color  : 'white',
-                    width  : '3.5rem',
-                    effect : [
-                        new HrzPos('center'),
-                        new VrtPos('center'),
-                        new SynHei(
-                            this.form(),
-                            mf.func.sizeSum(
-                                this.form().submitConts().height(),
-                                this.form().submitConts().sizeValue('margin-top'),
-                                '0.4rem'
-                            )
-                        )
-                    ]
+                    color: 'white', width: '3.5rem',
+                    effect : [new HrzPos('center'), new VrtPos('center'), new SynHei(this.form(), off)]
                 });
             }
             return ret;
