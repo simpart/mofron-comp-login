@@ -41,7 +41,7 @@ mf.comp.Login = class extends Appbase {
     initDomConts () {
         try {
             super.initDomConts();
-            this.effect(new SynWin({yflag: true }));
+            this.effect(new SynWin());
             
             /* add login form */
             this.frame().execOption({ child : this.form() });
