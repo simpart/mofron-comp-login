@@ -9,7 +9,6 @@ const Frame   = require('mofron-comp-frame');
 const Form    = require('mofron-comp-loginform');
 const Click   = require('mofron-event-click');
 const SynWin  = require('mofron-effect-syncwin');
-const SynWid  = require('mofron-effect-syncwid');
 const SynHei  = require('mofron-effect-synchei');
 const HrzPos  = require('mofron-effect-hrzpos');
 const VrtPos  = require('mofron-effect-vrtpos');
