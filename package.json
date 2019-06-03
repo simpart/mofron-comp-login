@@ -1,12 +1,13 @@
 {
   "name": "mofron-comp-login",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "login component for mofron",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "mofron-comp-frame"     : "",
     "mofron-comp-appbase"   : "",
     "mofron-comp-loginform" : "",
     "mofron-event-click"    : "",
