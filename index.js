@@ -62,7 +62,7 @@ mf.comp.Login = class extends Appbase {
             if (undefined !== prm) {
                 let off = mf.func.sizeSum(
                     this.form().submitConts().height(),
-                    this.form().submitConts().sizeValue('margin-top'),
+		    this.form().submitConts().style('margin-top'),
                     '0.4rem'
                 );
                 prm.execOption({
