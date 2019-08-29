@@ -1,0 +1,6 @@
+<require>
+    <tag module="mofron-comp-login">Login</tag>
+</require>
+
+<Login title="mofron" color="#f0e6fa","#fdfdfd","#b4b4fd">
+</Login>

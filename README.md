@@ -1,30 +1,35 @@
 # mofron-comp-login
-this is login view component for mofron.<br>
-please see [here](https://github.com/mofron/mofron) about an overview of mofron
+[mofron](https://mofron.github.io/mofron/) is module based frontend framework.
+
+login component for mofron
+
+it makes easy to build login page
+
 
 # Install
-
-```bash
-npm install mofron-comp-login
+```
+npm install mofron mofron-comp-login
 ```
 
-# Quick Start
+# Sample
+```html
+<require>
+    <tag module="mofron-comp-login">Login</tag>
+</require>
 
-```javascript
-require('mofron');
-let Login = require('mofron-comp-login');
-new Login({
-    title : 'Test App Title',
-    authConf : new mofron.Param(
-                 "http://login.serv.pross.php",
-                 (srv_ret) => {
-                   // this is callback
-                 }
-               ), 
-    visible : true
-});
+<Login title="mofron" color="#f0e6fa","#fdfdfd","#b4b4fd">
+</Login>
 ```
+# Parameter
 
-# Class Specification
-this component based by mofron-comp-appbase.
-please see [appbase spacification](https://github.com/simpart/mofron-comp-appbase)
+|Simple<br>Param | Parameter Name | Type | Description |
+|:--------------:|:---------------|:-----|:------------|
+| | authConf | string | uri path |
+| | | function | send callback function |
+| | mainColor | mixed (color) | string: color name, #hex |
+| | | | array: [red, green, blue, (alpha)] |
+| | | option | style option |
+| | accentColor | mixed (color) | string: color name, #hex |
+| | | | array: [red, green, blue, (alpha)] |
+| | | option | style option |
+

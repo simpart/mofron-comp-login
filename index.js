@@ -1,6 +1,7 @@
 /**
- * @file   mofron-comp-login/index.js
- * @brief  login component for mofron
+ * @file mofron-comp-login/index.js
+ * @brief login component for mofron
+ *        it makes easy to build login page
  * @author simpart
  */
 const mf      = require('mofron');
@@ -17,8 +18,10 @@ mf.comp.Login = class extends Appbase {
     /**
      * initialize component
      * 
-     * @param p1 (object) component option
-     * @param p1 (string) app title
+     * @param (mixed) title parameter
+     *                object: component option
+     * @param (mixed) authConf parameter
+     * @type private
      */
     constructor (po) {
         try {
@@ -35,7 +38,7 @@ mf.comp.Login = class extends Appbase {
     /**
      * initialize dom contents
      * 
-     * @note private method
+     * @type private
      */
     initDomConts () {
         try {
@@ -43,7 +46,7 @@ mf.comp.Login = class extends Appbase {
             this.effect(new SynWin());
             
             /* add login form */
-            this.frame().execOption({ child : this.form() });
+            this.frame().option({ child : this.form() });
             this.child(this.frame());
         } catch (e) {
             console.error(e.stack);
@@ -54,20 +57,22 @@ mf.comp.Login = class extends Appbase {
     /**
      * frame component setter/getter
      * 
-     * @note private method
+     * @param (mofron-comp-frame) form frame
+     * @return (mofron-comp-frame) form frame
+     * @type private
      */
     frame (prm) {
         try {
             let ret = this.innerComp('frame', prm, Frame);
             if (undefined !== prm) {
-                let off = mf.func.sizeSum(
-                    this.form().submitConts().height(),
-		    this.form().submitConts().style('margin-top'),
-                    '0.4rem'
-                );
-                prm.execOption({
+                prm.option({
                     color: 'white', width: '3.5rem',
-                    effect : [new HrzPos('center'), new VrtPos('center'), new SynHei(this.form(), off)]
+		    style: { "position" : "relative" },
+                    effect : [
+		        new HrzPos('center'),
+			new VrtPos('center'),
+			new SynHei(this.form(), this.form().marginTop())
+		    ]
                 });
             }
             return ret;
@@ -80,7 +85,9 @@ mf.comp.Login = class extends Appbase {
     /**
      * login form setter/getter
      * 
-     * @note private method
+     * @param (mofron-comp-loginform) login form component
+     * @return (mofron-comp-loginform) login form component
+     * @type private
      */
     form (prm) {
         try { return this.innerComp('form', prm, Form); } catch (e) {
@@ -92,9 +99,10 @@ mf.comp.Login = class extends Appbase {
     /**
      * authentication config setter/getter
      * 
-     * @param p1 (string) uri path
-     * @param p2 (function) send callback function
+     * @param (string) uri path
+     * @param (function) send callback function
      * @return (string) uri
+     * @type parameter
      */
     authConf (uri, func) {
         try {
@@ -108,17 +116,19 @@ mf.comp.Login = class extends Appbase {
     }
     
     /**
-     * main color setter/getter
+     * header,form frame color setter/getter
      * 
-     * @param p1 (string) color name
-     * @param p1 (array) color value ([red,green,blue])
+     * @param (mixed (color)) string: color name, #hex
+     *                        array: [red, green, blue, (alpha)]
+     * @param (option) style option
      * @return (string) color value
+     * @type parameter
      */
-    mainColor (prm) {
+    mainColor (prm, opt) {
         try {
-            let ret = super.mainColor(prm);
+            let ret = super.mainColor(prm, opt);
             if (undefined === ret) {
-                this.frame().mainColor(prm);
+                this.frame().mainColor(prm, opt);
             }
             return ret;
         } catch (e) {
@@ -130,12 +140,14 @@ mf.comp.Login = class extends Appbase {
     /**
      * submit color setter/getter
      *
-     * @param p1 (string) color name
-     * @param p1 (array) color value ([red,green,blue])
+     * @param (mixed (color)) string: color name, #hex
+     *                        array: [red, green, blue, (alpha)]
+     * @param (option) style option
      * @return (string) color value
+     * @type parameter
      */
-    accentColor (prm) {
-        try { return this.form().submitConts().mainColor(prm); } catch (e) {
+    accentColor (prm, opt) {
+        try { return this.form().submitConts().mainColor(prm, opt); } catch (e) {
             console.error(e.stack);
             throw e;
         }
